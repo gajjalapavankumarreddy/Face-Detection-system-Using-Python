@@ -1,44 +1,31 @@
-# Face Detection using OpenCV
+# pip install opencv-python
+# haarcascade_frontalface_default.xml
 
-This project creates a simple face detection system using Python and OpenCV. It can find faces in images or real-time video streams with the Haar Cascade Classifier.
+import cv2
 
-## Features
+a = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
-* Detects faces from images or webcam feed.
-* Uses the Haar Cascade classifier (`haarcascade_frontalface_default.xml`).
-* Offers real-time detection with bounding boxes.
-* Provides an easy-to-use and lightweight code structure.
 
-## Requirements
+b = cv2.VideoCapture(0)
 
-* Python 3.x
-* OpenCV (`pip install opencv-python`)
+while True:
+    c_rec, d_image = b.read()
+    e = cv2.cvtColor(d_image, cv2.COLOR_BGR2GRAY)
+    f = a.detectMultiScale(e, 1.3,6)
 
-## How to Run
+    for (x1, y1, w1, h1) in f:
+        cv2.rectangle(d_image, (x1, y1), (x1+w1, y1+h1), (255,0,0))
 
-1. Clone the repository:
+        cv2.imshow('img',d_image)
+        h = cv2.waitKey(40) & 0xff
+        if h == 40:
+            break
+            b.release()
+            cv2.destroyAllWindows()
 
-   ```bash
-   git clone https://github.com/yourusername/facedetection.git
-   cd facedetection
-   ```
 
-2. Place the `haarcascade_frontalface_default.xml` file in the same directory or update its path in the code.
 
-3. Run the script:
 
-   ```bash
-   python facedetection.py
-   ```
 
-4. Allow camera access for real-time detection.
 
-## Example Output
 
-* Faces will be highlighted with rectangles in the live camera feed.
-
-## Future Enhancements
-
-* Add smile and eye detection.
-* Integrate deep learning-based face detection (DNN).
-* Build a simple GUI for non-programmers.
